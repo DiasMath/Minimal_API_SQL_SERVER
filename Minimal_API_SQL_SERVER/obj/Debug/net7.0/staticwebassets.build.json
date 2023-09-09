@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8SozOMorvgNpdzoBbPZyfcmbvBYZBsn9Pi31LhG9Wpc=",
+  "Source": "Minimal_API_SQL_SERVER",
+  "BasePath": "_content/Minimal_API_SQL_SERVER",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
