@@ -40,7 +40,10 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+
+
 async Task<List<Livros>> GetLivros(DataContext context) => await context.Livros.ToListAsync();
+
 
 // Create
 app.MapPost("Add/Livros", async (DataContext context, Livros item) =>
@@ -48,18 +51,28 @@ app.MapPost("Add/Livros", async (DataContext context, Livros item) =>
     context.Livros.Add(item);
     await context.SaveChangesAsync();
     return Results.Ok(await GetLivros(context));
-});
+})
+.WithName("AddLivro")
+.WithOpenApi();
+
 
 // Read
-app.MapGet("/Livros", async (DataContext context) => await context.Livros.ToListAsync());
+app.MapGet("/Livros", async (DataContext context) =>
+await context.Livros.ToListAsync())
+.WithName("GetLivros")
+.WithOpenApi(); ;
 
+
+// Read By Id
 app.MapGet("/Livros/{id}", async (DataContext context, int id) =>
     await context.Livros.FindAsync(id) is Livros item ? 
-    Results.Ok(item) : Results.NotFound("Livro não encontrado"));
+    Results.Ok(item) : Results.NotFound("Livro não encontrado"))
+    .WithName("GetLivroById")
+    .WithOpenApi();
 
 
 // Upodate
-app.MapPost("/Livros/{id}", async (DataContext context, Livros item, int id) =>
+app.MapPut("/Livros/{id}", async (DataContext context, Livros item, int id) =>
 {
     var livroItem = await context.Livros.FindAsync(id);
     if (livroItem == null) return Results.NotFound("Livro não encontrado");
@@ -72,10 +85,13 @@ app.MapPost("/Livros/{id}", async (DataContext context, Livros item, int id) =>
     context.Livros.Update(livroItem);
     await context.SaveChangesAsync();
     return Results.Ok(await GetLivros(context));
-});
+})
+.WithName("UpdateLivroById")
+.WithOpenApi();
+
 
 // Delete
-app.MapPost("/Livros/{id}", async (DataContext context, int id) =>
+app.MapDelete("/Livros/{id}", async (DataContext context, int id) =>
 {
     var livroItem = await context.Livros.FindAsync(id);
     if (livroItem == null) return Results.NotFound("Livro não encontrado");
@@ -83,7 +99,9 @@ app.MapPost("/Livros/{id}", async (DataContext context, int id) =>
     context.Livros.Remove(livroItem);
     await context.SaveChangesAsync();
     return Results.Ok(await GetLivros(context));
-});
+})
+.WithName("DeleteLivroById")
+.WithOpenApi();
 
 
 app.Run();
