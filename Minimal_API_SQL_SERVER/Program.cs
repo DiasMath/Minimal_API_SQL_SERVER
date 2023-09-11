@@ -50,9 +50,28 @@ app.MapPost("Add/Livros", async (DataContext context, Livros item) =>
 });
 
 
+app.MapGet("/Livros", async (DataContext context) => await context.Livros.ToListAsync());
 
 
+app.MapGet("/Livros/{id}", async (DataContext context, int id) =>
+    await context.Livros.FindAsync(id) is Livros item ? 
+    Results.Ok(item) : Results.NotFound("Livro não encontrado"));
 
+
+app.MapPost("/Livros/{id}", async (DataContext context, Livros item, int id) =>
+{
+    var livroItem = await context.Livros.FindAsync(id);
+    if (livroItem == null) return Results.NotFound("Livro não encontrado");
+
+    livroItem.Nome = item.Nome;
+    livroItem.Editora = item.Editora;
+    livroItem.Genero = item.Genero;
+    livroItem.Preco = item.Preco;
+
+    context.Livros.Update(livroItem);
+    await context.SaveChangesAsync();
+    return Results.Ok(await GetLivros(context));
+});
 
 
 
