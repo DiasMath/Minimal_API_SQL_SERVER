@@ -1,6 +1,6 @@
 ﻿namespace Minimal_API_SQL_SERVER.Models;
 
-public class Livros
+public class Livro
 {
     public int Id { get; set; }
     public string Nome { get; set; }
