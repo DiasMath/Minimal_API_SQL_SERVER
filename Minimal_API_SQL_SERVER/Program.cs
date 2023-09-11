@@ -42,6 +42,7 @@ app.MapGet("/weatherforecast", () =>
 
 async Task<List<Livros>> GetLivros(DataContext context) => await context.Livros.ToListAsync();
 
+// Create
 app.MapPost("Add/Livros", async (DataContext context, Livros item) =>
 {
     context.Livros.Add(item);
@@ -49,15 +50,15 @@ app.MapPost("Add/Livros", async (DataContext context, Livros item) =>
     return Results.Ok(await GetLivros(context));
 });
 
-
+// Read
 app.MapGet("/Livros", async (DataContext context) => await context.Livros.ToListAsync());
-
 
 app.MapGet("/Livros/{id}", async (DataContext context, int id) =>
     await context.Livros.FindAsync(id) is Livros item ? 
     Results.Ok(item) : Results.NotFound("Livro não encontrado"));
 
 
+// Upodate
 app.MapPost("/Livros/{id}", async (DataContext context, Livros item, int id) =>
 {
     var livroItem = await context.Livros.FindAsync(id);
@@ -73,10 +74,16 @@ app.MapPost("/Livros/{id}", async (DataContext context, Livros item, int id) =>
     return Results.Ok(await GetLivros(context));
 });
 
+// Delete
+app.MapPost("/Livros/{id}", async (DataContext context, int id) =>
+{
+    var livroItem = await context.Livros.FindAsync(id);
+    if (livroItem == null) return Results.NotFound("Livro não encontrado");
 
-
-
-
+    context.Livros.Remove(livroItem);
+    await context.SaveChangesAsync();
+    return Results.Ok(await GetLivros(context));
+});
 
 
 app.Run();
