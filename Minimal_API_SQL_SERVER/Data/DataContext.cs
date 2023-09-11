@@ -1,5 +1,14 @@
-﻿namespace Minimal_API_SQL_SERVER.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Minimal_API_SQL_SERVER.Models;
 
-public class DataContext
+namespace Minimal_API_SQL_SERVER.Data;
+
+public class DataContext : DbContext
 {
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
+    {
+    }
+
+    public DbSet<Livros> Livros { get; set; }
+
 }
