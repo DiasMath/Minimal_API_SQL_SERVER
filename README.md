@@ -76,10 +76,3 @@ https://github.com/DiasMath/Minimal_API_SQL_SERVER/assets/92406256/81a8b846-e8d1
 3. Acesse a URL `https://localhost:5001/swagger/index.html` (ou a URL onde a API está sendo executada).
 
 A documentação Swagger fornecerá informações detalhadas sobre os endpoints disponíveis e permitirá que você execute solicitações diretamente na interface Swagger.
-
-## Licença
-
-→ Este projeto é licenciado sob a Licença MIT - consulte o arquivo LICENSE para obter detalhes.
-
-
-
